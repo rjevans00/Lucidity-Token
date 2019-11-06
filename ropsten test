@@ -1,0 +1,85 @@
+ragma solidity ^0.4.4;
+
+interface tokenRecipient { function receiveApproval(address _from, unit256 _value, address _token, bytes _extraData) external; }
+
+contract Lucidity {
+  string public name;
+  string public symbol;
+  unit8 public decimals = 18;
+  unit256 public totalSupply:
+
+  mapping (address => unit256) public balanceOf;
+  mapping (address => mapping (address => unit256)) public allowance;
+
+  event Transfer(address indexed from, address indexed to, unit256 value);
+
+  event Approval(address indexed _owner, address indexed _spender, unit256 _value);
+
+  event Burn(address indexed from, unit256 value);
+
+function Lucidity(
+  unit256 initialSupply,
+  string tonkenName,
+  string tokenSymbol
+) public {
+  totalSupply = initialSupply * 10 ** unit256(decimals);
+  balanceOf[msg.sender] = totalSupply;
+  name = tokenName
+  symbol = tokenSymbol;
+}
+
+function _transfer(address _from, address _to, untit _value) internal {
+  require(_to != 0x0);
+  require(balanceOf[_from] >= _value);
+  require(balanceOf[_to] + _value >= balanceOf[_to];
+  balanceOf[from] -= _value;
+  balanceOf[_to] += _value;
+  emit Transfer (_from, _to, _value);
+  assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+}
+
+function transfer(address _to, unit256 _value) public returns (bool success) {
+  _transfer (msg.sender, _to, _value);
+  return true;
+}
+
+function transferFrom(address _from, address _to, unit256 _vlaue) public returns (bools success)
+  require(_value <= allowance[_from][msg.sender]);
+  allowance[_from][msg.sender] -= _value;
+  _transfer(_from, _to, _value);
+  return true;
+}
+
+function approve(address _spender, unit256 _value) public
+  returns (bool success) {
+  allowance[msg.sender][_spender, _value);
+  emit Approval(msg.sender, _spender, _value);
+  return true;
+}
+
+Function approveAndCall(address _spender, unit256 _vlaue, bytes _extraData)
+  publicreturns (bool success) {
+  tokenRecipient spender = tokenRecipient(_spender);
+  if (approve(_spender, _value)) {
+    spender.receiveApproval(msg.sender, _value, this _extraData);
+    return true;
+  }
+}
+function burn(unit256 _value) public returns (bool success) {
+  require(balanceOf[msg.sender] -= _value;
+  balanceOf[msg.sender] -= _value;
+  totalSupply -= _value;
+  emit burn(msg.sender, _value)
+  return true;
+}
+
+function burnFrom(address _from, unit256 _value) public returns (bool success) {
+  require(balanceOf[_from] >= _value);
+  require(_value <= allowance[_from][msg.sender]);
+  balanceOf[_from] -=_value;
+  allowance[_from][msg.sender] -= _value;
+  totalSupply -= _value;
+  emit burn(_from, _value);
+  return true;
+  }
+}
